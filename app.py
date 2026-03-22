@@ -21,6 +21,8 @@ def get_similar (cluster):
 
 def song_analyze (song, artists):
     search = song_search(song, artists)
+    if search.empty:
+        return search, None
     cluster = search['cluster_name'].iloc[0]
     similar = get_similar(cluster)
     return search, similar
