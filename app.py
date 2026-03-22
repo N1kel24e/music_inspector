@@ -8,7 +8,7 @@ model = joblib.load('kmeans.pkl')
 scaler = joblib.load('scaler.pkl')
 
 def song_search(song, artists):
-    result = df[df['track_name'].str.contains(song, na=False) & df['artists'].str.contains(artists, na=False)]
+    result = df[df['track_name'].str.contains(song, na=False, case=False) & df['artists'].str.contains(artists, na=False, case=False)]
     result = result.drop_duplicates(subset=['track_name', 'artists'])
     result = result [['track_name', 'artists', 'cluster_name', 'energy', 'tempo', 'valence', 'danceability', 'acousticness',]]
     return result
