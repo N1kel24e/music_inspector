@@ -3,6 +3,7 @@
 A machine learning app that analyzes any Spotify track and finds similar music based on sound characteristics.
 
 ## Live Demo
+https://musicinspector-kscj8nnukdsgodhq9xzrbz.streamlit.app/
 
 ## How it works
 1. Enter a track name and artist
