@@ -22,7 +22,7 @@ A machine learning app that analyzes any Spotify track and finds similar music b
 
 ## Dataset
 Spotify Tracks Dataset by Yash
-https://www.kaggle.com/datasets/yashgpt/spotify-tracks-dataset
+[https://www.kaggle.com/datasets/yashdev01/spotify-tracks-dataset]
 
 ## Technologies
 - Python
