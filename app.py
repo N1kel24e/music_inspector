@@ -37,6 +37,7 @@ if st.button('Analyze'):
     track_info, similar = song_analyze(song, artist)
     if track_info.empty:
         st.warning("Track not found. Try different spelling!")
+        st.stop()
     st.write('Song name: ')
     st.write(track_info['track_name'].iloc[0])
     st.write('Artist: ')
