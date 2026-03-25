@@ -32,7 +32,7 @@ artist = st.text_input('Enter artist')
 song = st.text_input('Enter song')
 
 if st.button('Analyze'):
-    if not re.match("^[A-Za-z0-9'.!?&,-]*$", song) or not re.match("^[A-Za-z0-9'.!?&,-]*$", artist):
+    if not re.match("^[A-Za-z0-9 '.!?&,-]*$", song) or not re.match("^[A-Za-z0-9'.!?&,-]*$", artist):
         st.warning('Wrong input format')
     else:
         track_info, similar = song_analyze(song, artist)
