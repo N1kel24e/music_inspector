@@ -1,14 +1,12 @@
+import re
+
 import streamlit as st
-import joblib
 import pandas as pd
 
 df = pd.read_csv('tracks_with_clusters.csv')
 
-model = joblib.load('kmeans.pkl')
-scaler = joblib.load('scaler.pkl')
-
 def song_search(song, artists):
-    result = df[df['track_name'].str.contains(song, na=False, case=False) & df['artists'].str.contains(artists, na=False, case=False)]
+    result = df[df['track_name'].str.contains(song, na=False, case=False, regex=False) & df['artists'].str.contains(artists, na=False, case=False, regex=False)]
     result = result.drop_duplicates(subset=['track_name', 'artists'])
     result = result [['track_name', 'artists', 'cluster_name', 'energy', 'tempo', 'valence', 'danceability', 'acousticness',]]
     return result
@@ -34,23 +32,19 @@ artist = st.text_input('Enter artist')
 song = st.text_input('Enter song')
 
 if st.button('Analyze'):
-    track_info, similar = song_analyze(song, artist)
-    if track_info.empty:
-        st.warning("Track not found. Try different spelling!")
-        st.stop()
-    st.write('Song name: ')
-    st.write(track_info['track_name'].iloc[0])
-    st.write('Artist: ')
-    st.write(track_info['artists'].iloc[0])
-    st.write("Track info:")
-    st.write("Genre cluster: " + track_info['cluster_name'].iloc[0])
-    st.write("Energy")
-    st.progress(track_info['energy'].iloc[0])
-    st.write("Valence")
-    st.progress(track_info['valence'].iloc[0])
-    st.write("Danceability")
-    st.progress(track_info['danceability'].iloc[0])
-    st.write("Acousticness")
-    st.progress(track_info['acousticness'].iloc[0])
-    st.write("Similar tracks:")
-    st.write(similar)
+    if not re.match("^[A-Za-z0-9'.!?&,-]*$", song) or not re.match("^[A-Za-z0-9'.!?&,-]*$", artist):
+        st.warning('Wrong input format')
+    else:
+        track_info, similar = song_analyze(song, artist)
+        if track_info.empty:
+            st.warning("Track not found. Try different spelling!")
+            st.stop()
+        else:
+            st.write("**Song name:** " + track_info['track_name'].iloc[0])
+            st.write("**Artist:** " + track_info['artists'].iloc[0])
+            st.write("**Genre cluster:** " + track_info['cluster_name'].iloc[0])
+            for feature in ['energy', 'valence', 'danceability', 'acousticness']:
+                st.write(feature.capitalize())
+                st.progress(track_info[feature].iloc[0])
+            st.write("Similar tracks:")
+            st.write(similar)
