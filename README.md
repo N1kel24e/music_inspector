@@ -30,4 +30,4 @@ Spotify Tracks Dataset by Yash
 - pandas
 - scikit-learn (K-Means clustering)
 - Streamlit
-- joblib
+- matplotlib
